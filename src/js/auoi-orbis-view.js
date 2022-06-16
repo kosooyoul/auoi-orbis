@@ -103,7 +103,7 @@ window.requestAnimFrame = (function(){
 		var obj = this;
 		var reader  = new FileReader();
 
-		reader.addEventListener('load', function () {
+        reader.addEventListener('load', function () {
 			obj.loadFromDataURI(reader.result);
 		}, false);
 
@@ -149,15 +149,15 @@ window.requestAnimFrame = (function(){
 
 		//override prop
 		if (isFinite(obj.prop.angleX)) {
-			obj.angle.x = obj.prop.angleX;
+			obj.angle.x = obj.prop.angleX || 0;
 			console.log('obj.angle.x', obj.angle.x);
 		}
 		if (isFinite(obj.prop.angleY)) {
-			obj.angle.y = obj.prop.angleY;
+			obj.angle.y = obj.prop.angleY || 0;
 			console.log('obj.angle.y', obj.angle.y);
 		}
 		if (isFinite(obj.prop.fov)) {
-			obj.fov = obj.prop.fov;
+			obj.fov = obj.prop.fov || 60;
 			console.log('obj.fov', obj.fov);
 		}
 
