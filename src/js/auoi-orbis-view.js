@@ -316,13 +316,13 @@ window.requestAnimFrame = (function(){
 			dragging = false;
 		};
 
-		window.addEventListener('mousedown', onDown, false);
+		obj.element.addEventListener('mousedown', onDown, false);
 		window.addEventListener('mousemove', onMove, false);
 		window.addEventListener('mouseup', onUp, false);
 		obj.element.addEventListener('touchstart', onDown);
-		obj.element.addEventListener('touchmove', onMove);
-		obj.element.addEventListener('touchend', onUp);
-		window.addEventListener('wheel', function(e) {
+		window.addEventListener('touchmove', onMove);
+		window.addEventListener('touchend', onUp);
+		obj.element.addEventListener('wheel', function(e) {
 			if (e.deltaY < 0) {
 				obj.fov = Math.max(obj.fov - 1, 10);
 			} else if (e.deltaY > 0) {
@@ -332,7 +332,7 @@ window.requestAnimFrame = (function(){
 			obj.camera.updateProjectionMatrix();
 		}, false);
 
-		window.addEventListener('drop', function(e) {
+		obj.element.addEventListener('drop', function(e) {
 			if (obj.element != e.target) {
 				if (!~Array.prototype.indexOf.call(obj.element.childNodes, e.target)) {
 					return;
@@ -341,7 +341,7 @@ window.requestAnimFrame = (function(){
 			obj.loadFromFile(e.dataTransfer.files[0]);
 			e.preventDefault();
 		}, false);
-		window.addEventListener('dragover', function(e) {
+		obj.element.addEventListener('dragover', function(e) {
 			e.preventDefault();
 		}, false);
 	};
