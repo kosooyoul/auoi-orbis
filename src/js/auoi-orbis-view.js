@@ -323,6 +323,7 @@ window.requestAnimFrame = (function(){
 		window.addEventListener('touchmove', onMove);
 		window.addEventListener('touchend', onUp);
 		obj.element.addEventListener('wheel', function(e) {
+            if (e.ctrlKey == false) return
 			if (e.deltaY < 0) {
 				obj.fov = Math.max(obj.fov - 1, 10);
 			} else if (e.deltaY > 0) {
@@ -330,6 +331,7 @@ window.requestAnimFrame = (function(){
 			}
 			obj.camera.fov = obj.fov;
 			obj.camera.updateProjectionMatrix();
+            e.preventDefault();
 		}, false);
 
 		obj.element.addEventListener('drop', function(e) {
