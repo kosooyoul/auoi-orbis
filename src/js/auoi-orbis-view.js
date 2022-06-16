@@ -137,7 +137,7 @@ window.requestAnimFrame = (function(){
 	var loadData = function(obj) {
 		obj.name = obj.name || 'Untitled';
 		obj.downloadable = !!obj.downloadable;
-		obj.filename = obj.filename || 'VRImage.png';
+		obj.filename = obj.filename || 'orbis.png';
 
 		if (obj.angle) {
 			obj.angle = {'x': obj.angle.x || 0, 'y': obj.angle.y || 0};
@@ -381,9 +381,9 @@ window.requestAnimFrame = (function(){
 		return new Blob([arr], {type: mimeString});
 	}
 
-	window.VRImageViewer = clazz;
+	window.AuoiOrbisView = clazz;
 	window.addEventListener('load', function() {
-		var elements = document.querySelectorAll('[data-view=\'vr-image\']');
+		var elements = document.querySelectorAll('[data-view=\'auoi-orbis-view\']');
 		var i, name, obj;
 		for (i = 0; i < elements.length; i++) {
 			obj = new clazz.constructor(elements[i]);
