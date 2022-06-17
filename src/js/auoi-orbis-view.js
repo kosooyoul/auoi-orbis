@@ -48,12 +48,12 @@ window.requestAnimFrame = (function(){
 			this.renderer = new THREE.CanvasRenderer(); // Fallback to canvas renderer, if necessary.
 			this.webGLContext = null;
 		}
-		this.renderer.setSize(window.innerWidth, window.innerHeight); // Set the size of the WebGL viewport.
+		this.renderer.setSize(element.clientWidth, element.clientHeight); // Set the size of the WebGL viewport.
 		this.renderer.setClearColor(0xF9F9F9, 1);
 		this.element.appendChild(this.renderer.domElement); // Append the WebGL viewport to the DOM.
 
 		this.scene = new THREE.Scene(); // Create a Three.js scene object.
-		this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000); // Define the perspective camera's attributes.
+		this.camera = new THREE.PerspectiveCamera(60, element.clientWidth / element.clientHeight, 0.1, 1000); // Define the perspective camera's attributes.
 
 		this.sphere = new THREE.Group();
 		this.scene.add(this.sphere);
@@ -133,6 +133,13 @@ window.requestAnimFrame = (function(){
 
 		return true;
 	};
+
+    clazz.constructor.prototype.setSize = function(width, height) {
+		this.renderer.setSize(width, height); // Set the size of the WebGL viewport.
+
+        this.camera.aspect = width / height;
+        this.camera.updateProjectionMatrix();
+    }
 
 	var loadData = function(obj) {
 		obj.name = obj.name || 'Untitled';
@@ -243,7 +250,7 @@ window.requestAnimFrame = (function(){
 				obj.renderer.domElement.remove();
 
 				obj.renderer = new THREE.CanvasRenderer();
-				obj.renderer.setSize(window.innerWidth, window.innerHeight); // Set the size of the WebGL viewport.
+                obj.renderer.setSize(element.clientWidth, element.clientHeight); // Set the size of the WebGL viewport.
 				obj.renderer.setClearColor(0xF9F9F9, 1);
 				obj.element.appendChild(obj.renderer.domElement); // Append the WebGL viewport to the DOM.
 			}
@@ -309,13 +316,14 @@ window.requestAnimFrame = (function(){
 			dragging = false;
 		};
 
-		window.addEventListener('mousedown', onDown, false);
+		obj.element.addEventListener('mousedown', onDown, false);
 		window.addEventListener('mousemove', onMove, false);
 		window.addEventListener('mouseup', onUp, false);
 		obj.element.addEventListener('touchstart', onDown);
-		obj.element.addEventListener('touchmove', onMove);
-		obj.element.addEventListener('touchend', onUp);
-		window.addEventListener('wheel', function(e) {
+		window.addEventListener('touchmove', onMove);
+		window.addEventListener('touchend', onUp);
+		obj.element.addEventListener('wheel', function(e) {
+            if (e.ctrlKey == false) return
 			if (e.deltaY < 0) {
 				obj.fov = Math.max(obj.fov - 1, 10);
 			} else if (e.deltaY > 0) {
@@ -323,15 +331,10 @@ window.requestAnimFrame = (function(){
 			}
 			obj.camera.fov = obj.fov;
 			obj.camera.updateProjectionMatrix();
-		}, false);
-		window.addEventListener('resize', function() {
-			obj.renderer.setSize(window.innerWidth, window.innerHeight);
-
-			obj.camera.aspect = window.innerWidth / window.innerHeight;
-			obj.camera.updateProjectionMatrix();
+            e.preventDefault();
 		}, false);
 
-		window.addEventListener('drop', function(e) {
+		obj.element.addEventListener('drop', function(e) {
 			if (obj.element != e.target) {
 				if (!~Array.prototype.indexOf.call(obj.element.childNodes, e.target)) {
 					return;
@@ -340,7 +343,7 @@ window.requestAnimFrame = (function(){
 			obj.loadFromFile(e.dataTransfer.files[0]);
 			e.preventDefault();
 		}, false);
-		window.addEventListener('dragover', function(e) {
+		obj.element.addEventListener('dragover', function(e) {
 			e.preventDefault();
 		}, false);
 	};
