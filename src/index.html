@@ -21,13 +21,24 @@
 </head>
 
 <body>
-
-<h4>First Orbis View</h4>
+<h1>Auoi Orbis</h1>
+<p>This is a front-end project for rendering and viewing 360 degree stitched photos inside an orb.</p>
 <hr>
+<h4>How to use?</h4>
+<p>Tag: div</p>
+<p>Attributes:</p>
+<ul>
+  <li>data-view: view name (="auoi-orbis-view")</li>
+  <li>data-src: image url</li>
+  <li>data-json: image data</li>
+  <li>data-fileinput: allow drop file</li>
+</ul>
+<hr>
+<h4>1. Orbis View + Image URL</h4>
 <div name="auoi-orbis-view-1" data-view="auoi-orbis-view" data-src="../samples/photos/20180924.jpg" data-fileinput="yes" style="width: 600px; height: 400px;"></div>
 
-<h4>Second Orbis View</h4>
 <hr>
+<h4>2. Orbis View + JSONP Image Data</h4>
 <div name="auoi-orbis-view-2" data-view="auoi-orbis-view" data-jsonp="../samples/jsonp/20170301.jsonp" data-fileinput="yes" style="width: 600px; height: 400px;"></div>
 
 </body>
