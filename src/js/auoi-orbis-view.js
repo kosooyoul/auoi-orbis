@@ -10,6 +10,29 @@ if (!window.URL) {
 	};
 }
 
+function createLayout() {
+	const div = document.createElement("div");
+	div.style.position = "relative";
+	return div;
+}
+
+function createSpinner() {
+	const div = document.createElement("div");
+	div.classList.add("spinner");
+	div.style.position = "absolute";
+	div.style.left = "50%";
+	div.style.top = "50%";
+	div.style.width = "60px";
+	div.style.height = "60px";
+	div.style.marginTop = "-30px";
+	div.style.marginLeft = "-30px";
+	div.style.backgroundImage = "url(./images/spinner.png)";
+	div.style.backgroundSize = "contain";
+	div.style.backgroundPosition = "center";
+	div.style.pointerEvents = "none";
+	return div;
+}
+
 window.requestAnimFrame = (function(){
   return  window.requestAnimationFrame       ||
           window.webkitRequestAnimationFrame ||
@@ -50,7 +73,13 @@ window.requestAnimFrame = (function(){
 		}
 		this.renderer.setSize(element.clientWidth, element.clientHeight); // Set the size of the WebGL viewport.
 		this.renderer.setClearColor(0xF9F9F9, 1);
-		this.element.appendChild(this.renderer.domElement); // Append the WebGL viewport to the DOM.
+
+		this.spinner = createSpinner();
+
+		this.layout = createLayout();
+		this.layout.appendChild(this.renderer.domElement); // Append the WebGL viewport to the DOM.
+		this.layout.appendChild(this.spinner);
+		this.element.appendChild(this.layout);
 
 		this.scene = new THREE.Scene(); // Create a Three.js scene object.
 		this.camera = new THREE.PerspectiveCamera(60, element.clientWidth / element.clientHeight, 0.1, 1000); // Define the perspective camera's attributes.
@@ -87,6 +116,14 @@ window.requestAnimFrame = (function(){
 		var geometry = new THREE.SphereGeometry(100, 40, 40, 0, Math.PI * 2, 0, Math.PI * 2);
 		var material = new THREE.MeshBasicMaterial({color: 0xE0E0E0, wireframe: true, side: THREE.DoubleSide});
 		return new THREE.Mesh(geometry, material);
+	}
+
+	clazz.constructor.prototype.showSpinner = function() {
+		this.spinner.style.display = "block";
+	}
+
+	clazz.constructor.prototype.hideSpinner = function() {
+		this.spinner.style.display = "none";
 	}
 
 	/*
@@ -170,6 +207,7 @@ window.requestAnimFrame = (function(){
 
 		if (obj.src) {
 			initialize(obj);
+			obj.hideSpinner();
 		} else if (obj.jsonp) {
 			var script = document.createElement('script');
 			script.type = 'text/javascript';
@@ -187,10 +225,13 @@ window.requestAnimFrame = (function(){
 				} else {
 					evalWithinContext(obj, code);
 				}
+				obj.hideSpinner();
 			};
 			obj.isLoading = true;
 
 			document.head.appendChild(script);
+		} else {
+			obj.hideSpinner();
 		}
 	};
 
@@ -252,7 +293,7 @@ window.requestAnimFrame = (function(){
 				obj.renderer = new THREE.CanvasRenderer();
                 obj.renderer.setSize(element.clientWidth, element.clientHeight); // Set the size of the WebGL viewport.
 				obj.renderer.setClearColor(0xF9F9F9, 1);
-				obj.element.appendChild(obj.renderer.domElement); // Append the WebGL viewport to the DOM.
+				obj.layout.appendChild(obj.renderer.domElement); // Append the WebGL viewport to the DOM.
 			}
 
 			requestAnimFrame(render); // Call the render() function up to 60 times per second (i.e., up to 60 animation frames per second).
@@ -267,8 +308,8 @@ window.requestAnimFrame = (function(){
 		var rx, ry;
 
 		var onDown = function(e) {
-			if (obj.element != e.target) {
-				if (!~Array.prototype.indexOf.call(obj.element.childNodes, e.target)) {
+			if (obj.layout != e.target) {
+				if (!~Array.prototype.indexOf.call(obj.layout.childNodes, e.target)) {
 					return;
 				}
 			}
@@ -316,13 +357,13 @@ window.requestAnimFrame = (function(){
 			dragging = false;
 		};
 
-		obj.element.addEventListener('mousedown', onDown, false);
+		obj.layout.addEventListener('mousedown', onDown, false);
 		window.addEventListener('mousemove', onMove, false);
 		window.addEventListener('mouseup', onUp, false);
-		obj.element.addEventListener('touchstart', onDown);
+		obj.layout.addEventListener('touchstart', onDown);
 		window.addEventListener('touchmove', onMove);
 		window.addEventListener('touchend', onUp);
-		obj.element.addEventListener('wheel', function(e) {
+		obj.layout.addEventListener('wheel', function(e) {
             if (e.ctrlKey == false) return
 			if (e.deltaY < 0) {
 				obj.fov = Math.max(obj.fov - 1, 10);
@@ -334,16 +375,16 @@ window.requestAnimFrame = (function(){
             e.preventDefault();
 		}, false);
 
-		obj.element.addEventListener('drop', function(e) {
-			if (obj.element != e.target) {
-				if (!~Array.prototype.indexOf.call(obj.element.childNodes, e.target)) {
+		obj.layout.addEventListener('drop', function(e) {
+			if (obj.layout != e.target) {
+				if (!~Array.prototype.indexOf.call(obj.layout.childNodes, e.target)) {
 					return;
 				}
 			}
 			obj.loadFromFile(e.dataTransfer.files[0]);
 			e.preventDefault();
 		}, false);
-		obj.element.addEventListener('dragover', function(e) {
+		obj.layout.addEventListener('dragover', function(e) {
 			e.preventDefault();
 		}, false);
 	};
