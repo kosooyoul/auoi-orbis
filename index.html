@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+
+  <meta property="og:title" content="Auoi Orbis View">
+  <meta property="og:url" content="https://orbis.auoi.net/">
+  <meta property="og:description" content="스티칭된 360 사진을 볼 수 있습니다.">
+  <meta property="og:type" content="article">
+  <meta property="og:domain" content="orbis.auoi.net">
+
+  <title>Orbis View</title>
+  <link rel="shortcut icon" href="https://www.auoi.net/icons/ahyane-20y-m.png">
+  <link rel="stylesheet" href="./src/css/auoi-orbis-view.css">
+
+  <script defer src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
+  <script defer src="./src/libs/CanvasRenderer.js"></script>
+  <script defer src="./src/libs/Projector.js"></script>
+  <script defer src="./src/js/auoi-orbis-view.js"></script>
+</head>
+
+<body>
+<h1>Auoi Orbis</h1>
+<p>This is a front-end project for rendering and viewing 360 degree stitched photos inside an orb.</p>
+<hr>
+<h4>How to use?</h4>
+<p>Tag: div</p>
+<p>Attributes:</p>
+<ul>
+  <li>data-view: view name (="auoi-orbis-view")</li>
+  <li>data-src: image url</li>
+  <li>data-json: image data</li>
+  <li>data-fileinput: allow drop file</li>
+</ul>
+<hr>
+<h4>1. Orbis View + Image URL</h4>
+<div name="auoi-orbis-view-1" data-view="auoi-orbis-view" data-src="./samples/photos/20180924.jpg" data-fileinput="yes" style="width: 600px; height: 400px;"></div>
+
+<hr>
+<h4>2. Orbis View + JSONP Image Data</h4>
+<div name="auoi-orbis-view-2" data-view="auoi-orbis-view" data-jsonp="./samples/jsonp/20170301.jsonp" data-fileinput="yes" style="width: 600px; height: 400px;"></div>
+
+</body>
+</html>
