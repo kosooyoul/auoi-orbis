@@ -115,7 +115,11 @@ window.requestAnimFrame = (function(){
 			if (fullscreen) {
 				w = element.clientWidth;
 				h = element.clientHeight;
-				this.element.requestFullscreen();
+				if (this.element.requestFullscreen) {
+					this.element.requestFullscreen();
+				} else {
+					this.element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+				}
 				setTimeout(() => {
 					this.renderer.setSize(element.clientWidth, element.clientHeight);
 				}, 400)
