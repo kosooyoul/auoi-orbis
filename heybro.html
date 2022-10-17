@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+
+<meta property="og:title" content="Auoi Orbis">
+<meta property="og:url" content="https://orbis.auoi.net/heybro.html">
+<meta property="og:description" content="You can see the stitched 360 photos.">
+<meta property="og:type" content="article">
+<meta property="og:domain" content="orbis.auoi.net">
+
+<title>Hey!!Bro - Auoi Orbis</title>
+<link rel="shortcut icon" href="https://www.auoi.net/icons/ahyane-20y-m.png">
+<link rel="stylesheet" href="./src/css/auoi-orbis-view.css">
+<style>
+body {
+  margin: 0px;
+  padding: 20px;
+  background-image: url('/assets/background.png');
+  background-size: 64px;
+  background-color: #eee;
+}
+div.orbis-view {
+  border-radius: 4px;
+  box-shadow: 4px 4px 12px 0px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+ul.flex {
+  display: flex;
+  margin: 0px;
+  padding: 0px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+ul.flex>li {
+  list-style-type: none;
+  margin: 12px;
+  padding: 0px;
+}
+</style>
+<script defer src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
+<script defer src="./src/libs/CanvasRenderer.js"></script>
+<script defer src="./src/libs/Projector.js"></script>
+<script defer src="./src/js/auoi-orbis-view.js"></script>
+</head>
+
+<body>
+<header>
+  <h1>Hey!!Bro</h1>
+  <p>
+    <a href="https://www.google.com/search?q=%EC%A0%95%EC%9E%90%EC%97%AD+%ED%97%A4%EC%9D%B4%EB%B8%8C%EB%A1%9C&ei=GFNNY4jjIv7u2roP6M-2mA0&ved=0ahUKEwiIz8aJquf6AhV-t1YBHeinDdMQ4dUDCA4&uact=5&oq=%EC%A0%95%EC%9E%90%EC%97%AD+%ED%97%A4%EC%9D%B4%EB%B8%8C%EB%A1%9C&gs_lcp=Cgdnd3Mtd2l6EAMyAggmOgsIABCABBCxAxCDAToLCC4QgAQQsQMQgwE6EQguEIAEELEDEIMBEMcBENEDOgUILhCABDoHCAAQgAQQAzoFCAAQgAQ6BAgAEEM6CwguEIAEEMcBEK8BOgQIABAeOgcIABCABBANOgYIABAeEA1KBAhBGABKBAhGGABQAFiyEmDzE2gDcAF4BIAB3QGIAf0WkgEGMS4xNC4zmAEAoAEBwAEB&sclient=gws-wiz" target="_blank">
+      Search by google
+    </a>
+  </p>
+</header>
+<section>
+  <ul class="flex">
+    <li>
+      <div class="orbis-view" data-view="auoi-orbis-view" data-src="./images/heybro/01.jpg" style="width: 300px; height: 200px;"></div>
+    </li>
+    <li>
+      <div class="orbis-view" data-view="auoi-orbis-view" data-src="./images/heybro/02.jpg" style="width: 300px; height: 200px;"></div>
+    </li>
+    <li>
+      <div class="orbis-view" data-view="auoi-orbis-view" data-src="./images/heybro/03.jpg" style="width: 300px; height: 200px;"></div>
+    </li>
+    <li>
+      <div class="orbis-view" data-view="auoi-orbis-view" data-src="./images/heybro/04.jpg" style="width: 300px; height: 200px;"></div>
+    </li>
+    <li>
+      <div class="orbis-view" data-view="auoi-orbis-view" data-src="./images/heybro/05.jpg" style="width: 300px; height: 200px;"></div>
+    </li>
+    <li>
+      <div class="orbis-view" data-view="auoi-orbis-view" data-src="./images/heybro/06.jpg" style="width: 300px; height: 200px;"></div>
+    </li>
+    <li>
+      <div class="orbis-view" data-view="auoi-orbis-view" data-src="./images/heybro/07.jpg" style="width: 300px; height: 200px;"></div>
+    </li>
+    <li>
+      <div class="orbis-view" data-view="auoi-orbis-view" data-src="./images/heybro/08.jpg" style="width: 300px; height: 200px;"></div>
+    </li>
+  </ul>
+</section>
+<footer>
+  <p style="font-size: 12px; color: white; font-weight: bold; text-shadow: 0px -1px 2px black;">by AUOI</p>
+</footer>
+</body>
+</html>
