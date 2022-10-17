@@ -33,6 +33,33 @@ function createSpinner() {
 	return div;
 }
 
+function createFullscreen(callback) {
+	const div = document.createElement("div");
+	div.style.position = "absolute";
+	div.style.right = "8px";
+	div.style.top = "8px";
+	div.style.padding = "2px 4px";
+	div.style.border = "1px solid #fff";
+	div.style.borderRadius = "4px";
+	div.style.color = "#fff";
+	div.style.boxShadow = "0px 0px 4px 0px rgba(0, 0, 0, 0.4)";
+	div.style.backgroundColor = "rgba(0, 0, 80, 0.4)";
+	div.style.cursor = "pointer";
+	div.style.fontSize = "13px";
+	div.textContent = "전체화면"
+	let fullscreen = false;
+	div.onclick = function() {
+		fullscreen = !fullscreen;
+		if (fullscreen) {
+			// this.element.requestFullscreen();
+		} else {
+			document.exitFullscreen();
+		}
+		callback && callback(fullscreen)
+	};
+	return div;
+}
+
 window.requestAnimFrame = (function(){
   return  window.requestAnimationFrame       ||
           window.webkitRequestAnimationFrame ||
@@ -71,6 +98,9 @@ window.requestAnimFrame = (function(){
 			this.renderer = new THREE.CanvasRenderer(); // Fallback to canvas renderer, if necessary.
 			this.webGLContext = null;
 		}
+		let w = element.clientWidth;
+		let h = element.clientHeight;
+
 		this.renderer.setSize(element.clientWidth, element.clientHeight); // Set the size of the WebGL viewport.
 		this.renderer.setClearColor(0xF9F9F9, 1);
 
@@ -80,6 +110,20 @@ window.requestAnimFrame = (function(){
 		this.layout.appendChild(this.renderer.domElement); // Append the WebGL viewport to the DOM.
 		this.layout.appendChild(this.spinner);
 		this.element.appendChild(this.layout);
+
+		const fullscreen = createFullscreen((fullscreen) => {
+			if (fullscreen) {
+				w = element.clientWidth;
+				h = element.clientHeight;
+				this.element.requestFullscreen();
+				setTimeout(() => {
+					this.renderer.setSize(element.clientWidth, element.clientHeight);
+				}, 400)
+			} else {
+				this.renderer.setSize(w, h);
+			}
+		});
+		this.layout.appendChild(fullscreen);
 
 		this.scene = new THREE.Scene(); // Create a Three.js scene object.
 		this.camera = new THREE.PerspectiveCamera(60, element.clientWidth / element.clientHeight, 0.1, 1000); // Define the perspective camera's attributes.
